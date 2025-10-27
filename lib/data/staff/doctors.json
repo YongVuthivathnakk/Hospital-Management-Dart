@@ -1,0 +1,26 @@
+[
+  {
+    "id": "89c375e7-5b18-4154-9264-1a2bd015a039",
+    "name": "k",
+    "salary": 300000.0,
+    "position": "Doctor"
+  },
+  {
+    "id": "d12957e8-29a6-4d9d-8a7d-56a844adce01",
+    "name": "Doc",
+    "salary": 300000.0,
+    "position": "Doctor"
+  },
+  {
+    "id": "b982cc93-719a-417f-bfd8-0e50b7444901",
+    "name": "g",
+    "salary": 300000.0,
+    "position": "Doctor"
+  },
+  {
+    "id": "ff29f12d-0749-4b6a-8add-b80d0188248a",
+    "name": "2",
+    "salary": 300000.0,
+    "position": "Doctor"
+  }
+]
