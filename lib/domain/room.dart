@@ -50,7 +50,7 @@ class Room {
   String toString() {
     final current = patients.map((p) => p.name).join(', ');
     return '''
-🏠 Room $roomNumber
+  Room $roomNumber
   ID        : $id
   Capacity  : $capacity
   Occupied  : ${patients.length}/$capacity

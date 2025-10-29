@@ -151,6 +151,7 @@ class Hospital {
   }
 
   //  ====== Room =====
+
   void addRoom(Room room) {
     final file = File('$BASE_PATH/room/rooms.json');
     file.parent.createSync(recursive: true);
@@ -184,17 +185,34 @@ class Hospital {
     return rooms;
   }
 
-  void assignToRoom(Room room, Patient patient) {
+  void assignToRoom(int roomIndex, int patientIndex, Patient patient) {
     final file = File('$BASE_PATH/room/rooms.json');
     if (!file.existsSync()) return;
 
     final content = file.readAsStringSync().trim();
     if (content.isEmpty) return;
 
+    // Load existing rooms
     final data = jsonDecode(content) as List;
-
     final rooms = data.map((r) => Room.fromJson(r)).toList();
 
-    room.assignPatient(patient);
+    // Check if patient already exists in that room
+    if (rooms[roomIndex].patients.any((p) => p.id == patient.id)) {
+      print(
+        "⚠️ Patient already included in this room. Please choose another patient!",
+      );
+      return;
+    }
+
+    // Assign patient
+    rooms[roomIndex].assignPatient(patient);
+
+    // Save back to file (overwrite)
+    final updatedData = rooms.map((r) => r.toJson()).toList();
+    file.writeAsStringSync(
+      const JsonEncoder.withIndent('  ').convert(updatedData),
+    );
+
+    print("✅ Patient successfully assigned to Room id: ${rooms[roomIndex].id}");
   }
 }

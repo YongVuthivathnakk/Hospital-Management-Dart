@@ -62,7 +62,7 @@ class ManagePatientConsole extends Console {
           sleep(const Duration(seconds: 2));
           break;
         case '3':
-          var patients = hospital.getPatients();
+          List<Patient> patients = hospital.getPatients();
 
           if (patients.isEmpty) {
             print('⚠️ No patients found.');

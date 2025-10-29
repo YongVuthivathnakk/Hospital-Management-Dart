@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:hospital_management_dart/domain/patient.dart';
 import 'package:hospital_management_dart/domain/room.dart';
 import 'package:hospital_management_dart/ui/console.dart';
 
@@ -61,35 +62,24 @@ class ManageRoomConsole extends Console {
           break;
         case '2':
           // Get all the avialable rooms
-          var rooms = hospital.getRooms();
+          List<Room> rooms = hospital.getRooms();
           int rIndex = 1;
           if (rooms.isEmpty) {
             print('⚠️ No rooms found.');
           } else {
             print('\n🏠 All Rooms\n---------------------------');
             for (var room in rooms) {
-              print('$rIndex. Room ID: ${room.id}');
-              print('   Room Number: ${room.roomNumber}');
-              print('   Capacity: ${room.patients.length}/${room.capacity}');
-              if (room.patients.isEmpty) {
-                print('   Patients: None');
-              } else {
-                print('   Patients:');
-                for (var patient in room.patients) {
-                  print(
-                    '     - ${patient.name} (${patient.gender}, Age ${patient.age})',
-                  );
-                }
-              }
+              print('[$rIndex]');
+              print(room);
               print('---------------------------');
               rIndex++;
             }
           }
           // Select the room
-          int roomIndex = -1;
+          int roomIndex = 0;
 
           while (true) {
-            stdout.write('Choose the room number (1 - $rIndex): ');
+            stdout.write('Choose the room: ');
             try {
               roomIndex = int.parse(stdin.readLineSync() ?? '');
 
@@ -112,17 +102,14 @@ class ManageRoomConsole extends Console {
             }
           }
 
-          var patients = hospital.getPatients();
+          List<Patient> patients = hospital.getPatients();
           int pIndex = 1;
           if (patients.isEmpty) {
             print('⚠️ No patients found.');
           } else {
             print('\n🩺 All Patients\n---------------------------');
             for (var patient in patients) {
-              print('$pIndex ID: ${patient.id}');
-              print('  Name: ${patient.name}');
-              print('  Gender: ${patient.gender}');
-              print('  Age: ${patient.age}');
+              print('[$pIndex]. $patient');
               print('---------------------------');
               pIndex++;
             }
@@ -130,7 +117,7 @@ class ManageRoomConsole extends Console {
           // Select the patient
           int patientIndex = 0;
           while (true) {
-            stdout.write('Choose the patient (1 - $pIndex): ');
+            stdout.write('Choose patient: ');
             try {
               patientIndex = int.parse(stdin.readLineSync() ?? '');
               if (patientIndex <= 0) {
@@ -146,23 +133,22 @@ class ManageRoomConsole extends Console {
           }
 
           // Assign to room
-
+          hospital.assignToRoom(
+            roomIndex - 1,
+            patientIndex - 1,
+            patients[patientIndex - 1],
+          );
           sleep(const Duration(seconds: 2));
           break;
         case '3':
-          var rooms = hospital.getRooms();
+          List<Room> rooms = hospital.getRooms();
 
           if (rooms.isEmpty) {
             print('⚠️ No rooms found.');
           } else {
-            print('\n🏠 All Rooms\n---------------------------');
+            print('\n🏠 All Rooms\n====================');
             for (var room in rooms) {
-              print('• Room ID: ${room.id}');
-              print('  Room Number: ${room.roomNumber}');
-              print(
-                '  Capacity: ${room.patients.toList().length}/${room.capacity}',
-              );
-              print('  Patients: ${room.patients}');
+              print(room);
               print('---------------------------');
             }
           }
