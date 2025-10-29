@@ -4,15 +4,14 @@ import 'package:hospital_management_dart/domain/patient.dart';
 import 'package:hospital_management_dart/domain/room.dart';
 import 'package:hospital_management_dart/domain/staff.dart';
 
-const BASE_PATH = "lib/data/staff/";
+const BASE_PATH = "lib/data/";
 
 class Hospital {
   List<Patient> patients = [];
-  List<Room> rooms = [];
 
   //  ====== Doctor =====
   void addDoctor(Doctor doctor) {
-    final file = File('$BASE_PATH/doctors.json');
+    final file = File('$BASE_PATH/staff/doctors.json');
     file.parent.createSync(recursive: true);
 
     List<Map<String, dynamic>> doctorsMap = [];
@@ -29,8 +28,8 @@ class Hospital {
     );
   }
 
-  List<dynamic> getDoctors() {
-    final file = File('$BASE_PATH/doctors.json');
+  List<Doctor> getDoctors() {
+    final file = File('$BASE_PATH/staff/doctors.json');
 
     if (!file.existsSync()) return [];
 
@@ -39,16 +38,7 @@ class Hospital {
 
     final data = jsonDecode(content) as List;
 
-    final doctors = data
-        .map(
-          (n) => {
-            "id": n['id'],
-            "name": n['name'],
-            "salary": (n['salary'] ?? 0).toDouble(),
-            "position": n['position'],
-          },
-        )
-        .toList();
+    final doctors = data.map((d) => Doctor.fromJson(d)).toList();
 
     return doctors;
   }
@@ -56,7 +46,7 @@ class Hospital {
   //  ====== Nurse =====
 
   void addNurse(Nurse nurse) {
-    final file = File('$BASE_PATH/nurses.json');
+    final file = File('$BASE_PATH/staff/nurses.json');
     file.parent.createSync(recursive: true);
 
     List<Map<String, dynamic>> nursesMap = [];
@@ -74,7 +64,7 @@ class Hospital {
   }
 
   List<dynamic> getNurses() {
-    final file = File('$BASE_PATH/nurses.json');
+    final file = File('$BASE_PATH/staff/nurses.json');
 
     if (!file.existsSync()) return [];
 
@@ -83,16 +73,7 @@ class Hospital {
 
     final data = jsonDecode(content) as List;
 
-    final nurses = data
-        .map(
-          (n) => {
-            "id": n['id'],
-            "name": n['name'],
-            "salary": (n['salary'] ?? 0).toDouble(),
-            "position": n['position'],
-          },
-        )
-        .toList();
+    final nurses = data.map((n) => Nurse.fromJson(n)).toList();
 
     return nurses;
   }
@@ -100,7 +81,7 @@ class Hospital {
   //  ====== Admin =====
 
   void addAdministrativePersonnel(AdministrativePersonnel admin) {
-    final file = File('$BASE_PATH/administrative_personnels.json');
+    final file = File('$BASE_PATH/staff/administrative_personnels.json');
     file.parent.createSync(recursive: true);
 
     List<Map<String, dynamic>> adminMap = [];
@@ -117,8 +98,8 @@ class Hospital {
     );
   }
 
-  List<dynamic> getAdministrativePersonnel() {
-    final file = File('$BASE_PATH/administrative_personnels.json');
+  List<AdministrativePersonnel> getAdministrativePersonnel() {
+    final file = File('$BASE_PATH/staff/administrative_personnels.json');
 
     if (!file.existsSync()) return [];
 
@@ -128,14 +109,7 @@ class Hospital {
     final data = jsonDecode(content) as List;
 
     final administrativePersonnels = data
-        .map(
-          (n) => {
-            "id": n['id'],
-            "name": n['name'],
-            "salary": (n['salary'] ?? 0).toDouble(),
-            "position": n['position'],
-          },
-        )
+        .map((a) => AdministrativePersonnel.fromJson(a))
         .toList();
 
     return administrativePersonnels;
@@ -143,8 +117,84 @@ class Hospital {
 
   //  ====== Patient =====
 
-  void addPatient(Patient patient) => patients.add(patient);
+  void addPatient(Patient patient) {
+    final file = File('$BASE_PATH/patient/patients.json');
+    file.parent.createSync(recursive: true);
+
+    List<Map<String, dynamic>> patientsMap = [];
+    if (file.existsSync()) {
+      final content = file.readAsStringSync();
+      if (content.isNotEmpty) {
+        patientsMap = List<Map<String, dynamic>>.from(jsonDecode(content));
+      }
+    }
+
+    patientsMap.add(patient.toJson());
+    file.writeAsStringSync(
+      const JsonEncoder.withIndent('  ').convert(patientsMap),
+    );
+  }
+
+  List<Patient> getPatients() {
+    final file = File('$BASE_PATH/patient/patients.json');
+
+    if (!file.existsSync()) return [];
+
+    final content = file.readAsStringSync().trim();
+    if (content.isEmpty) return [];
+
+    final data = jsonDecode(content) as List;
+
+    final patients = data.map((p) => Patient.fromJson(p)).toList();
+
+    return patients;
+  }
 
   //  ====== Room =====
-  void addRoom(Room room) => rooms.add(room);
+  void addRoom(Room room) {
+    final file = File('$BASE_PATH/room/rooms.json');
+    file.parent.createSync(recursive: true);
+
+    List<Map<String, dynamic>> roomsMap = [];
+    if (file.existsSync()) {
+      final content = file.readAsStringSync();
+      if (content.isNotEmpty) {
+        roomsMap = List<Map<String, dynamic>>.from(jsonDecode(content));
+      }
+    }
+
+    roomsMap.add(room.toJson());
+    file.writeAsStringSync(
+      const JsonEncoder.withIndent('  ').convert(roomsMap),
+    );
+  }
+
+  List<Room> getRooms() {
+    final file = File('$BASE_PATH/room/rooms.json');
+
+    if (!file.existsSync()) return [];
+
+    final content = file.readAsStringSync().trim();
+    if (content.isEmpty) return [];
+
+    final data = jsonDecode(content) as List;
+
+    final rooms = data.map((r) => Room.fromJson(r)).toList();
+
+    return rooms;
+  }
+
+  void assignToRoom(Room room, Patient patient) {
+    final file = File('$BASE_PATH/room/rooms.json');
+    if (!file.existsSync()) return;
+
+    final content = file.readAsStringSync().trim();
+    if (content.isEmpty) return;
+
+    final data = jsonDecode(content) as List;
+
+    final rooms = data.map((r) => Room.fromJson(r)).toList();
+
+    room.assignPatient(patient);
+  }
 }

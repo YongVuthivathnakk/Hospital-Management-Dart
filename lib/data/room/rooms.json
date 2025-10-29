@@ -1,0 +1,20 @@
+[
+  {
+    "id": "9daeb2ee-546e-4070-b1c5-260a0e3fdbe2",
+    "roomNumber": 1,
+    "capacity": 5,
+    "patients": []
+  },
+  {
+    "id": "408a6b60-e2ef-4a55-9f7b-580ffc296d7e",
+    "roomNumber": 2,
+    "capacity": 10,
+    "patients": []
+  },
+  {
+    "id": "8f7591c4-5942-4d43-84c2-1b1a286087e6",
+    "roomNumber": 69,
+    "capacity": 69,
+    "patients": []
+  }
+]

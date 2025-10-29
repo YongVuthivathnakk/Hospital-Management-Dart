@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:hospital_management_dart/domain/hospital.dart';
 import 'package:hospital_management_dart/domain/staff.dart';
+import 'package:hospital_management_dart/util/input_validator.dart';
 
 class ManageStaffConsole {
   Hospital hospital;
@@ -31,7 +32,9 @@ class ManageStaffConsole {
               break;
             }
           }
-          Doctor doctor = Doctor(name: name);
+
+          String gender = InputValidator.validateGender();
+          Doctor doctor = Doctor(name: name, gender: gender);
           hospital.addDoctor(doctor);
           print('✅ Doctor "${doctor.name}" created successfully!');
           sleep(const Duration(seconds: 2));
@@ -47,7 +50,10 @@ class ManageStaffConsole {
               break;
             }
           }
-          Nurse nurse = Nurse(name: name);
+
+          String gender = InputValidator.validateGender();
+
+          Nurse nurse = Nurse(name: name, gender: gender);
           hospital.addNurse(nurse);
           print('✅ Nurse "$name" created successfully!');
           sleep(const Duration(seconds: 2));
@@ -64,8 +70,10 @@ class ManageStaffConsole {
             }
           }
 
+          String gender = InputValidator.validateGender();
+
           AdministrativePersonnel administrativePersonnel =
-              AdministrativePersonnel(name: name);
+              AdministrativePersonnel(name: name, gender: gender);
           hospital.addAdministrativePersonnel(administrativePersonnel);
 
           print('✅ Administrative staff "$name" created successfully!');
@@ -73,16 +81,14 @@ class ManageStaffConsole {
           sleep(const Duration(seconds: 2));
           break;
         case '4':
-          print('\n📋 All Staff Members\n');
+          print('\n📋 All Staff Members\n=======================\n');
           // --- Doctors ---
           var doctors = hospital.getDoctors();
 
           if (doctors.isNotEmpty) {
-            print('👩‍⚕️ Doctors:');
+            print('🩺 Doctors\n---------------------------');
             for (var doctor in hospital.getDoctors()) {
-              print(
-                '  • ${doctor['name']} (Salary: \$${doctor['salary'].toStringAsFixed(2)})',
-              );
+              print(doctor);
             }
             print('');
           }
@@ -90,11 +96,9 @@ class ManageStaffConsole {
           //   // --- Nurses ---
           var nurses = hospital.getNurses();
           if (nurses.isNotEmpty) {
-            print('👩‍⚕️ Nurses:');
+            print('🩺 Nurses\n---------------------------');
             for (var nurse in nurses) {
-              print(
-                '  • ${nurse['name']} (Salary: \$${nurse['salary'].toStringAsFixed(2)})',
-              );
+              print(nurse);
             }
             print('');
           }
@@ -102,11 +106,9 @@ class ManageStaffConsole {
           // --- Administrative Staff ---
           var administrativePersonnels = hospital.getAdministrativePersonnel();
           if (administrativePersonnels.isNotEmpty) {
-            print('💼 Administrative Staff:');
+            print('🩺 Administrative Personnel\n---------------------------');
             for (var admin in administrativePersonnels) {
-              print(
-                '  • ${admin['name']} (Salary: \$${admin['salary'].toStringAsFixed(2)})',
-              );
+              print(admin);
             }
             print('');
           }

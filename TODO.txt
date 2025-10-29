@@ -1,0 +1,2 @@
+1. Create assign patient to room
+2. Schedule Appointment

@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:hospital_management_dart/domain/patient.dart';
 import 'package:hospital_management_dart/ui/console.dart';
+import 'package:hospital_management_dart/util/input_validator.dart';
 
 class ManagePatientConsole extends Console {
   ManagePatientConsole({required super.hospital});
@@ -18,8 +20,36 @@ class ManagePatientConsole extends Console {
 
       switch (choice) {
         case '1':
-          stdout.write('Enter patient name: ');
-          final name = stdin.readLineSync() ?? '';
+          String name;
+          while (true) {
+            stdout.write('Enter patient name: ');
+            name = stdin.readLineSync() ?? '';
+            if (name == '' || name.isEmpty) {
+              print("⚠️ Name must not be empty!");
+            } else {
+              break;
+            }
+          }
+          int age = 0;
+          while (true) {
+            stdout.write('Enter age: ');
+            try {
+              age = int.parse(stdin.readLineSync() ?? '');
+              if (age < 0) {
+                print('⚠️ Age cannot be negative!');
+              } else if (age > 0) {
+                break;
+              }
+            } catch (e) {
+              print('⚠️ Invalid input! Please enter a valid age.');
+            }
+          }
+
+          String gender = InputValidator.validateGender();
+
+          Patient patient = Patient(name: name, age: age, gender: gender);
+          hospital.addPatient(patient);
+
           print('✅ Patient "$name" created successfully!');
           sleep(const Duration(seconds: 2));
           break;
@@ -32,9 +62,20 @@ class ManagePatientConsole extends Console {
           sleep(const Duration(seconds: 2));
           break;
         case '3':
-          print('📋 Showing all patients... (placeholder)');
+          var patients = hospital.getPatients();
+
+          if (patients.isEmpty) {
+            print('⚠️ No patients found.');
+          } else {
+            print('\n🩺 All Patients\n---------------------------');
+            for (var patient in patients) {
+              print(patient);
+            }
+          }
+
           sleep(const Duration(seconds: 2));
           break;
+
         case '4':
           return;
         default:

@@ -3,12 +3,14 @@
     "id": "319cc51a-845a-4113-96e3-64a78bf5ab5f",
     "name": "k",
     "salary": 43000.0,
+    "gender": "Male",
     "position": "Administrative Personnel"
   },
   {
     "id": "f63352be-584d-4155-a59b-d20c5f1a33c7",
     "name": "k",
     "salary": 43000.0,
+    "gender": "Male",
     "position": "Administrative Personnel"
   }
 ]

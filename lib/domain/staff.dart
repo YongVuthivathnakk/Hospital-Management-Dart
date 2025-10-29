@@ -7,11 +7,19 @@ const ADMINISTRATIVE_BASE_SALARY = 43000.0;
 abstract class Staff {
   final String id;
   final String name;
+  final String gender;
   double salary;
   String position;
 
-  Staff({required this.name, required this.salary, required this.position})
-    : id = Uuid().v4();
+  Staff({
+    String? id,
+    required this.name,
+    required this.gender,
+    double? salary,
+    String? position,
+  }) : id = id ?? Uuid().v4(),
+       position = position ?? '',
+       salary = salary ?? 0;
 
   String get getStaffId => id;
 
@@ -19,47 +27,94 @@ abstract class Staff {
 
   @override
   String toString() {
-    return '''
-🧾 Staff Info:
-  ID        : $id
-  Name      : $name
-  Position  : $position
-  Salary    : \$${salary.toStringAsFixed(2)}
-  ''';
+    return '👤 Name: $name | Gender: $gender | Salary: $salary | ID: $id';
   }
 }
+
+// ======== Doctor ========
 
 class Doctor extends Staff {
-  Doctor({required super.name})
-    : super(position: 'Doctor', salary: DOCTOR_BASE_SALARY);
+  Doctor({super.id, required super.name, required super.gender, double? salary})
+    : super(position: 'Doctor', salary: salary ?? DOCTOR_BASE_SALARY);
+
+  factory Doctor.fromJson(Map<String, dynamic> json) {
+    return Doctor(
+      id: json['id'],
+      name: json['name'],
+      gender: json['gender'],
+      salary: (json['salary'] ?? DOCTOR_BASE_SALARY).toDouble(),
+    );
+  }
 
   @override
   Map<String, dynamic> toJson() {
-    return {'id': id, 'name': name, 'salary': salary, 'position': position};
+    return {
+      'id': id,
+      'name': name,
+      'gender': gender,
+      'salary': salary,
+      'position': position,
+    };
   }
 }
 
+// ======= NURSE ======
+
 class Nurse extends Staff {
-  Nurse({required super.name})
-    : super(position: 'Nurse', salary: NUSRE_BASE_SALARY);
+  Nurse({super.id, required super.name, required super.gender, double? salary})
+    : super(position: 'Nurse', salary: salary ?? NUSRE_BASE_SALARY);
+
+  factory Nurse.fromJson(Map<String, dynamic> json) {
+    return Nurse(
+      id: json['id'],
+      name: json['name'],
+      gender: json['gender'],
+      salary: (json['salary'] ?? NUSRE_BASE_SALARY).toDouble(),
+    );
+  }
 
   @override
   Map<String, dynamic> toJson() {
-    return {'id': id, 'name': name, 'salary': salary, 'position': position};
+    return {
+      'id': id,
+      'name': name,
+      'gender': gender,
+      'salary': salary,
+      'position': position,
+    };
   }
 }
 
 class AdministrativePersonnel extends Staff {
-  AdministrativePersonnel({required super.name})
-    : super(
-        position: 'Administrative Personnel',
-        salary: ADMINISTRATIVE_BASE_SALARY,
-      );
+  AdministrativePersonnel({
+    super.id,
+    required super.name,
+    required super.gender,
+    double? salary,
+  }) : super(
+         position: 'Administrative Personnel',
+         salary: salary ?? ADMINISTRATIVE_BASE_SALARY,
+       );
+
+  factory AdministrativePersonnel.fromJson(Map<String, dynamic> json) {
+    return AdministrativePersonnel(
+      id: json['id'],
+      name: json['name'],
+      gender: json['gender'],
+      salary: (json['salary'] ?? ADMINISTRATIVE_BASE_SALARY).toDouble(),
+    );
+  }
 
   // Method
 
   @override
   Map<String, dynamic> toJson() {
-    return {'id': id, 'name': name, 'salary': salary, 'position': position};
+    return {
+      'id': id,
+      'name': name,
+      'gender': gender,
+      'salary': salary,
+      'position': position,
+    };
   }
 }
