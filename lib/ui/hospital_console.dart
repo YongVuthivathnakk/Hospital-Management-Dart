@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:hospital_management_dart/domain/hospital.dart';
+import 'package:hospital_management_dart/ui/appointment/manage_appointment_console.dart';
 import 'package:hospital_management_dart/ui/patient/manage_patient_console.dart';
 import 'package:hospital_management_dart/ui/room/manage_room_console.dart';
 import 'package:hospital_management_dart/ui/staff/manage_staff_console.dart';
@@ -16,7 +17,8 @@ class HospitalConsole {
       print('1. Manage Staff');
       print('2. Manage Rooms');
       print('3. Manage Patients');
-      print('4. Exit');
+      print('4. Manage Appointments');
+      print('5. Exit');
       stdout.write('Enter your choice: ');
       final choice = stdin.readLineSync();
 
@@ -31,6 +33,9 @@ class HospitalConsole {
           patientConsole();
           break;
         case '4':
+          appointmentConsole();
+          return;
+        case '5':
           print('👋 Exiting system... Goodbye!');
           return;
         default:
@@ -60,6 +65,16 @@ class HospitalConsole {
   // -----------------------------
   void patientConsole() {
     ManagePatientConsole console = ManagePatientConsole(hospital: hospital);
+    console.start();
+  }
+
+  // -----------------------------
+  // APPOINTMENT MANAGEMENT (UI only)
+  // -----------------------------
+  void appointmentConsole() {
+    ManageAppointmentConsole console = ManageAppointmentConsole(
+      hospital: hospital,
+    );
     console.start();
   }
 }

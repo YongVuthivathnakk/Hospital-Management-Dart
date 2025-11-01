@@ -12,75 +12,73 @@ class ManagePatientConsole extends Console {
     while (true) {
       print('\n=== PATIENT MANAGEMENT ===');
       print('1. Add Patient');
-      print('2. Schedule Appointment');
-      print('3. View All Patients');
-      print('4. Back to Main Menu');
+      print('2. View All Patients');
+      print('3. Back to Main Menu');
       stdout.write('Enter your choice: ');
       final choice = stdin.readLineSync();
 
       switch (choice) {
         case '1':
-          String name;
-          while (true) {
-            stdout.write('Enter patient name: ');
-            name = stdin.readLineSync() ?? '';
-            if (name == '' || name.isEmpty) {
-              print("⚠️ Name must not be empty!");
-            } else {
-              break;
-            }
-          }
-          int age = 0;
-          while (true) {
-            stdout.write('Enter age: ');
-            try {
-              age = int.parse(stdin.readLineSync() ?? '');
-              if (age < 0) {
-                print('⚠️ Age cannot be negative!');
-              } else if (age > 0) {
-                break;
-              }
-            } catch (e) {
-              print('⚠️ Invalid input! Please enter a valid age.');
-            }
-          }
-
-          String gender = InputValidator.validateGender();
-
-          Patient patient = Patient(name: name, age: age, gender: gender);
-          hospital.addPatient(patient);
-
-          print('✅ Patient "$name" created successfully!');
-          sleep(const Duration(seconds: 2));
+          addPatient();
           break;
         case '2':
-          stdout.write('Enter patient name: ');
-          final patient = stdin.readLineSync() ?? '';
-          stdout.write('Enter doctor name: ');
-          final doctor = stdin.readLineSync() ?? '';
-          print('✅ Appointment scheduled for "$patient" with Dr. "$doctor"!');
-          sleep(const Duration(seconds: 2));
+          showAllPatient();
           break;
         case '3':
-          List<Patient> patients = hospital.getPatients();
-
-          if (patients.isEmpty) {
-            print('⚠️ No patients found.');
-          } else {
-            print('\n🩺 All Patients\n---------------------------');
-            for (var patient in patients) {
-              print(patient);
-            }
-          }
-
-          sleep(const Duration(seconds: 2));
-          break;
-
-        case '4':
           return;
         default:
           print('⚠️ Invalid option. Try again.');
       }
     }
+  }
+
+  void showAllPatient() {
+    List<Patient> patients = hospital.getPatients();
+    
+    if (patients.isEmpty) {
+      print('⚠️ No patients found.');
+    } else {
+      print('\n🩺 All Patients\n---------------------------');
+      for (var patient in patients) {
+        print(patient);
+      }
+    }
+    
+    sleep(const Duration(seconds: 2));
+  }
+
+  void addPatient() {
+    String name;
+    while (true) {
+      stdout.write('Enter patient name: ');
+      name = stdin.readLineSync() ?? '';
+      if (name == '' || name.isEmpty) {
+        print("⚠️ Name must not be empty!");
+      } else {
+        break;
+      }
+    }
+    int age = 0;
+    while (true) {
+      stdout.write('Enter age: ');
+      try {
+        age = int.parse(stdin.readLineSync() ?? '');
+        if (age < 0) {
+          print('⚠️ Age cannot be negative!');
+        } else if (age > 0) {
+          break;
+        }
+      } catch (e) {
+        print('⚠️ Invalid input! Please enter a valid age.');
+      }
+    }
+    
+    String gender = InputValidator.validateGender();
+    
+    Patient patient = Patient(name: name, age: age, gender: gender);
+    hospital.addPatient(patient);
+    
+    print('✅ Patient "$name" created successfully!');
+    sleep(const Duration(seconds: 2));
   }
 }
