@@ -1,8 +1,11 @@
 import 'dart:io';
+import '../../domain/patient.dart';
+import '../../domain/room.dart';
+import '../console.dart';
 
-import 'package:hospital_management_dart/domain/patient.dart';
-import 'package:hospital_management_dart/domain/room.dart';
-import 'package:hospital_management_dart/ui/console.dart';
+// import 'package:hospital_management_dart/domain/patient.dart';
+// import 'package:hospital_management_dart/domain/room.dart';
+// import 'package:hospital_management_dart/ui/console.dart';
 
 class ManageRoomConsole extends Console {
   ManageRoomConsole({required super.hospital});

@@ -1,8 +1,11 @@
 import 'dart:io';
 
-import 'package:hospital_management_dart/domain/hospital.dart';
-import 'package:hospital_management_dart/domain/staff.dart';
-import 'package:hospital_management_dart/util/input_validator.dart';
+import '../../domain/hospital.dart';
+import '../../domain/staff.dart';
+import '../../util/input_validator.dart';
+// import 'package:hospital_management_dart/domain/hospital.dart';
+// import 'package:hospital_management_dart/domain/staff.dart';
+// import 'package:hospital_management_dart/util/input_validator.dart';
 
 class ManageStaffConsole {
   Hospital hospital;

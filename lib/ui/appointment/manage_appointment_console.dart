@@ -1,7 +1,8 @@
 import 'dart:io';
-import 'dart:isolate';
+//import 'dart:isolate';
+import '../console.dart';
 
-import 'package:hospital_management_dart/ui/console.dart';
+//import 'package:hospital_management_dart/ui/console.dart';
 
 class ManageAppointmentConsole extends Console {
   ManageAppointmentConsole({required super.hospital});

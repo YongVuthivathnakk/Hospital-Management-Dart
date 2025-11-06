@@ -1,9 +1,15 @@
 import 'dart:io';
-import 'package:hospital_management_dart/domain/hospital.dart';
-import 'package:hospital_management_dart/ui/appointment/manage_appointment_console.dart';
-import 'package:hospital_management_dart/ui/patient/manage_patient_console.dart';
-import 'package:hospital_management_dart/ui/room/manage_room_console.dart';
-import 'package:hospital_management_dart/ui/staff/manage_staff_console.dart';
+import '../domain/hospital.dart';
+import '../ui/appointment/manage_appointment_console.dart';
+import '../ui/patient/manage_patient_console.dart';
+import '../ui/room/manage_room_console.dart';
+import '../ui/staff/manage_staff_console.dart';
+
+// import 'package:hospital_management_dart/domain/hospital.dart';
+// import 'package:hospital_management_dart/ui/appointment/manage_appointment_console.dart';
+// import 'package:hospital_management_dart/ui/patient/manage_patient_console.dart';
+// import 'package:hospital_management_dart/ui/room/manage_room_console.dart';
+// import 'package:hospital_management_dart/ui/staff/manage_staff_console.dart';
 
 class HospitalConsole {
   final Hospital hospital;
