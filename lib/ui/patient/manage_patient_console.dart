@@ -1,8 +1,11 @@
 import 'dart:io';
+import '../../domain/patient.dart';
+import '../console.dart';
+import '../../util/input_validator.dart';
 
-import 'package:hospital_management_dart/domain/patient.dart';
-import 'package:hospital_management_dart/ui/console.dart';
-import 'package:hospital_management_dart/util/input_validator.dart';
+// import 'package:hospital_management_dart/domain/patient.dart';
+// import 'package:hospital_management_dart/ui/console.dart';
+// import 'package:hospital_management_dart/util/input_validator.dart';
 
 class ManagePatientConsole extends Console {
   ManagePatientConsole({required super.hospital});
