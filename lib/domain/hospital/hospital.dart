@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import '../domain/patient.dart';
-import '../domain/room.dart';
-import '../domain/staff.dart';
-import 'appointment.dart';
+import 'package:hospital_management_dart/domain/appointment/appointment_time.dart';
+
+import '../patient/patient.dart';
+import '../room/room.dart';
+import '../staff/staff.dart';
+import '../appointment/appointment.dart';
 // import 'package:hospital_management_dart/domain/patient.dart';
 // import 'package:hospital_management_dart/domain/room.dart';
 // import 'package:hospital_management_dart/domain/staff.dart';
@@ -11,8 +13,6 @@ import 'appointment.dart';
 const BASE_PATH = "lib/data/";
 
 class Hospital {
-  List<Patient> patients = [];
-
   //  ====== Doctor =====
   void addDoctor(Doctor doctor) {
     final file = File('$BASE_PATH/staff/doctors.json');
@@ -220,39 +220,48 @@ class Hospital {
     print("✅ Patient successfully assigned to Room id: ${rooms[roomIndex].id}");
   }
 
-
   //====== Appointment methods ======
+
   //== CREATE
-  void addAppointment(Appointment appointment){
+  void addAppointment(String doctorId, String patientId, AppointmentTime time) {
     final file = File('$BASE_PATH/appointment/appointments.json');
     file.parent.createSync(recursive: true);
 
+    // ✅ Load existing appointments if file exists
     List<Map<String, dynamic>> appointmentsMap = [];
     if (file.existsSync()) {
-      final content = file.readAsStringSync();
-      if(content.isNotEmpty){
-        appointmentsMap = List<Map<String, dynamic>>.from(jsonDecode(content));
+      final content = file.readAsStringSync().trim();
+      if (content.isNotEmpty) {
+        try {
+          appointmentsMap = List<Map<String, dynamic>>.from(
+            jsonDecode(content),
+          );
+        } catch (e) {
+          print('⚠️ Error reading existing appointments: $e');
+        }
       }
     }
-    appointmentsMap.add({
-      'id':appointment.id,
-      'staffId':appointment.staff.id,
-      'time':appointment.time,
-      'roomId': appointment.room.id,
-      'appointmentTime': appointment.appointmentTime,
-      'purpose':appointment.purpose,
-      'status': appointment.status.toString(),
-    });
 
+    // ✅ Create new appointment (status defaults to scheduled)
+    final newAppointment = Appointment(
+      staffId: doctorId,
+      patientId: patientId,
+      time: time,
+    );
+
+    // ✅ Convert to JSON
+    appointmentsMap.add(newAppointment.toJson());
+
+    // ✅ Save updated list
     file.writeAsStringSync(
-      const JsonEncoder.withIndent(' ').convert(appointmentsMap),
+      const JsonEncoder.withIndent('  ').convert(appointmentsMap),
     );
   }
 
   //======READ======
   List<Appointment> getAppointments() {
     final file = File('$BASE_PATH/appointment/appointments.json');
-    if(!file.existsSync()) return [];
+    if (!file.existsSync()) return [];
 
     final content = file.readAsStringSync().trim();
     if (content.isEmpty) return [];
@@ -260,68 +269,58 @@ class Hospital {
     final data = jsonDecode(content) as List;
 
     //Get all related data
-    final patients = getPatients();
-    final doctors = getDoctors();
-    final rooms = getRooms();
 
-    return data.map((json){
-      return Appointment(
-        id: json['id'],
-        staff: doctors.firstWhere((doctors) => doctors.id == json['staffId']),
-        patient: patients.firstWhere((patients) => patients.id == json['patientsId']),
-        time: json['time'],
-        room: rooms.firstWhere((room) => room.id == json['roomId']),
-        appointmentTime: DateTime.parse(json['appointmentTime']),
-        purpose: json['purpose'],
-        status: AppointmentStatus.values.firstWhere(
-          (e) => e.toString() == 'AppointmentStatus.${json['status']}',
-        ),
-      );
-    }).toList();
+    final appointments = data.map((p) => Appointment.fromJson(p)).toList();
+
+    return appointments;
   }
 
   // UPDATE - Complete appointment
-  void completeAppointment(String appointmentId) {
-    final appointments = getAppointments();
-    final appointmentIndex = appointments.indexWhere((apt) => apt.id == appointmentId);
-  
-    if (appointmentIndex != -1) {
-      appointments[appointmentIndex].completeAppointment();
-      _saveAllAppointments(appointments);
-      print('✅ Appointment completed!');
-    } else {
-      print('❌ Appointment not found!');
-    }
-  }
+  // void completeAppointment(String appointmentId) {
+  //   final appointments = getAppointments();
+  //   final appointmentIndex = appointments.indexWhere(
+  //     (apt) => apt.id == appointmentId,
+  //   );
 
-  void cancelAppointment(String appointmentId) {
-  final appointments = getAppointments();
-  final appointmentIndex = appointments.indexWhere((apt) => apt.id == appointmentId);
-  
-  if (appointmentIndex != -1) {
-    appointments[appointmentIndex].cancelAppointment();
-    _saveAllAppointments(appointments);
-    print('✅ Appointment cancelled!');
-  } else {
-    print('❌ Appointment not found!');
-  }
-}
+  //   if (appointmentIndex != -1) {
+  //     appointments[appointmentIndex].completeAppointment();
+  //     _saveAllAppointments(appointments);
+  //     print('✅ Appointment completed!');
+  //   } else {
+  //     print('❌ Appointment not found!');
+  //   }
+  // }
 
-  // DELETE - Remove appointment completely
-  void deleteAppointment(String appointmentId) {
-    final appointments = getAppointments();
-    appointments.removeWhere((apt) => apt.id == appointmentId);
-    _saveAllAppointments(appointments);
-    print('✅ Appointment deleted!');
-  }
+  // void cancelAppointment(String appointmentId) {
+  //   final appointments = getAppointments();
+  //   final appointmentIndex = appointments.indexWhere(
+  //     (apt) => apt.id == appointmentId,
+  //   );
 
-  // PRIVATE HELPER - Save all appointments to file
-  void _saveAllAppointments(List<Appointment> appointments) {
-    final file = File('$BASE_PATH/appointment/appointments.json');
-    final appointmentsMap = appointments.map((apt) => apt.toJson()).toList();
-  
-    file.writeAsStringSync(
-    const JsonEncoder.withIndent('  ').convert(appointmentsMap),
-  );
-}
+  //   if (appointmentIndex != -1) {
+  //     appointments[appointmentIndex].cancelAppointment();
+  //     _saveAllAppointments(appointments);
+  //     print('✅ Appointment cancelled!');
+  //   } else {
+  //     print('❌ Appointment not found!');
+  //   }
+  // }
+
+  // // DELETE - Remove appointment completely
+  // void deleteAppointment(String appointmentId) {
+  //   final appointments = getAppointments();
+  //   appointments.removeWhere((apt) => apt.id == appointmentId);
+  //   _saveAllAppointments(appointments);
+  //   print('✅ Appointment deleted!');
+  // }
+
+  // // PRIVATE HELPER - Save all appointments to file
+  // void _saveAllAppointments(List<Appointment> appointments) {
+  //   final file = File('$BASE_PATH/appointment/appointments.json');
+  //   final appointmentsMap = appointments.map((apt) => apt.toJson()).toList();
+
+  //   file.writeAsStringSync(
+  //     const JsonEncoder.withIndent('  ').convert(appointmentsMap),
+  //   );
+  // }
 }

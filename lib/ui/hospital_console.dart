@@ -1,5 +1,5 @@
 import 'dart:io';
-import '../domain/hospital.dart';
+import '../domain/hospital/hospital.dart';
 import '../ui/appointment/manage_appointment_console.dart';
 import '../ui/patient/manage_patient_console.dart';
 import '../ui/room/manage_room_console.dart';

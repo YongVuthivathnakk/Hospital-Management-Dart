@@ -1,4 +1,4 @@
-import './domain/hospital.dart';
+import 'domain/hospital/hospital.dart';
 import './ui/hospital_console.dart';
 // import 'package:hospital_management_dart/domain/hospital.dart';
 // import 'package:hospital_management_dart/ui/hospital_console.dart';

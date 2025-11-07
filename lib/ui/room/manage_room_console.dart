@@ -1,6 +1,6 @@
 import 'dart:io';
-import '../../domain/patient.dart';
-import '../../domain/room.dart';
+import '../../domain/patient/patient.dart';
+import '../../domain/room/room.dart';
 import '../console.dart';
 
 // import 'package:hospital_management_dart/domain/patient.dart';
@@ -38,14 +38,9 @@ class ManageRoomConsole extends Console {
     }
   }
 
-
-
-
-
-
   void showAllRooms() {
     List<Room> rooms = hospital.getRooms();
-    
+
     if (rooms.isEmpty) {
       print('⚠️ No rooms found.');
     } else {
@@ -55,12 +50,12 @@ class ManageRoomConsole extends Console {
         print('---------------------------');
       }
     }
-    
+
     sleep(const Duration(seconds: 2));
   }
 
   void assignPatientToRoom() {
-     // Get all the avialable rooms
+    // Get all the avialable rooms
     List<Room> rooms = hospital.getRooms();
     int rIndex = 1;
     if (rooms.isEmpty) {
@@ -76,19 +71,19 @@ class ManageRoomConsole extends Console {
     }
     // Select the room
     int roomIndex = 0;
-    
+
     while (true) {
       stdout.write('Choose the room: ');
       try {
         roomIndex = int.parse(stdin.readLineSync() ?? '');
-    
+
         if (roomIndex <= 0 || roomIndex > rooms.length) {
           print('⚠️ Invalid room index! Please choose a valid room.');
           continue;
         }
-    
+
         final selectedRoom = rooms[roomIndex - 1];
-    
+
         if (selectedRoom.isFull) {
           print(
             '⚠️ Room ${selectedRoom.roomNumber} is full! Choose another room.',
@@ -100,7 +95,7 @@ class ManageRoomConsole extends Console {
         print('⚠️ Invalid input! Please enter a valid number.');
       }
     }
-    
+
     List<Patient> patients = hospital.getPatients();
     int pIndex = 1;
     if (patients.isEmpty) {
@@ -130,7 +125,7 @@ class ManageRoomConsole extends Console {
         print('⚠️ Invalid input! Please choose a valid patient.');
       }
     }
-    
+
     // Assign to room
     hospital.assignToRoom(
       roomIndex - 1,

@@ -28,6 +28,37 @@
         "name": "Jimmy",
         "gender": "Female",
         "age": 10
+      },
+      {
+        "id": "a6693a06-b0cf-4372-89e2-acbbea8646c1",
+        "name": "James",
+        "gender": "Male",
+        "age": 45
+      }
+    ]
+  },
+  {
+    "id": "3fbab0fc-8263-41d9-a4b0-f2a80e5ad59b",
+    "roomNumber": 3,
+    "capacity": 3,
+    "patients": [
+      {
+        "id": "cabaadef-84a1-41e0-8895-eb9ede0bd1b3",
+        "name": "Jimmy",
+        "gender": "Female",
+        "age": 10
+      },
+      {
+        "id": "a6693a06-b0cf-4372-89e2-acbbea8646c1",
+        "name": "James",
+        "gender": "Male",
+        "age": 45
+      },
+      {
+        "id": "ec32750e-e944-43c3-a90d-1af8aa949f8f",
+        "name": "Mike",
+        "gender": "Male",
+        "age": 4
       }
     ]
   }

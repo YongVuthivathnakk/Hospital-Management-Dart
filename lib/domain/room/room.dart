@@ -1,5 +1,5 @@
 import 'package:uuid/uuid.dart';
-import 'patient.dart';
+import '../patient/patient.dart';
 
 class Room {
   final String id;

@@ -1,5 +1,5 @@
 import 'dart:io';
-import '../../domain/patient.dart';
+import '../../domain/patient/patient.dart';
 import '../console.dart';
 import '../../util/input_validator.dart';
 
@@ -37,7 +37,7 @@ class ManagePatientConsole extends Console {
 
   void showAllPatient() {
     List<Patient> patients = hospital.getPatients();
-    
+
     if (patients.isEmpty) {
       print('⚠️ No patients found.');
     } else {
@@ -46,7 +46,7 @@ class ManagePatientConsole extends Console {
         print(patient);
       }
     }
-    
+
     sleep(const Duration(seconds: 2));
   }
 
@@ -75,12 +75,12 @@ class ManagePatientConsole extends Console {
         print('⚠️ Invalid input! Please enter a valid age.');
       }
     }
-    
+
     String gender = InputValidator.validateGender();
-    
+
     Patient patient = Patient(name: name, age: age, gender: gender);
     hospital.addPatient(patient);
-    
+
     print('✅ Patient "$name" created successfully!');
     sleep(const Duration(seconds: 2));
   }

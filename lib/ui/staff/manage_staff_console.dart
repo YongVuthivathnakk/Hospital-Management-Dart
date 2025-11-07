@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import '../../domain/hospital.dart';
-import '../../domain/staff.dart';
+import '../../domain/hospital/hospital.dart';
+import '../../domain/staff/staff.dart';
 import '../../util/input_validator.dart';
 // import 'package:hospital_management_dart/domain/hospital.dart';
 // import 'package:hospital_management_dart/domain/staff.dart';
@@ -48,7 +48,7 @@ class ManageStaffConsole {
     print('\n📋 All Staff Members\n=======================\n');
     // --- Doctors ---
     var doctors = hospital.getDoctors();
-    
+
     if (doctors.isNotEmpty) {
       print('🩺 Doctors\n---------------------------');
       for (var doctor in hospital.getDoctors()) {
@@ -56,7 +56,7 @@ class ManageStaffConsole {
       }
       print('');
     }
-    
+
     //   // --- Nurses ---
     var nurses = hospital.getNurses();
     if (nurses.isNotEmpty) {
@@ -66,7 +66,7 @@ class ManageStaffConsole {
       }
       print('');
     }
-    
+
     // --- Administrative Staff ---
     var administrativePersonnels = hospital.getAdministrativePersonnel();
     if (administrativePersonnels.isNotEmpty) {
@@ -76,7 +76,7 @@ class ManageStaffConsole {
       }
       print('');
     }
-    
+
     sleep(const Duration(seconds: 2));
   }
 
@@ -91,15 +91,17 @@ class ManageStaffConsole {
         break;
       }
     }
-    
+
     String gender = InputValidator.validateGender();
-    
-    AdministrativePersonnel administrativePersonnel =
-        AdministrativePersonnel(name: name, gender: gender);
+
+    AdministrativePersonnel administrativePersonnel = AdministrativePersonnel(
+      name: name,
+      gender: gender,
+    );
     hospital.addAdministrativePersonnel(administrativePersonnel);
-    
+
     print('✅ Administrative staff "$name" created successfully!');
-    
+
     sleep(const Duration(seconds: 2));
   }
 
@@ -114,9 +116,9 @@ class ManageStaffConsole {
         break;
       }
     }
-    
+
     String gender = InputValidator.validateGender();
-    
+
     Nurse nurse = Nurse(name: name, gender: gender);
     hospital.addNurse(nurse);
     print('✅ Nurse "$name" created successfully!');
@@ -134,7 +136,7 @@ class ManageStaffConsole {
         break;
       }
     }
-    
+
     String gender = InputValidator.validateGender();
     Doctor doctor = Doctor(name: name, gender: gender);
     hospital.addDoctor(doctor);
