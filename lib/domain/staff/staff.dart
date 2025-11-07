@@ -8,7 +8,7 @@ abstract class Staff {
   final String id;
   final String name;
   final String gender;
-  double salary;
+  double _salary;
   String position;
 
   Staff({
@@ -19,10 +19,10 @@ abstract class Staff {
     String? position,
   }) : id = id ?? Uuid().v4(),
        position = position ?? '',
-       salary = salary ?? 0;
+       _salary = salary ?? 0;
 
   String get getStaffId => id;
-
+  double get salary => _salary;
   Map<String, dynamic> toJson() => {};
 
   @override
