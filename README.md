@@ -32,58 +32,57 @@ All data (staff, patients, rooms, and appointments) are stored as JSON files in 
 
 ## 🏗️ Project Structure
 
-.
-└── lib/
-    ├── assets/
-    │   ├── appointment/
-    │   │   └── appointments.dart
-    │   ├── patient/
-    │   │   └── patients.dart
-    │   ├── room/
-    │   │   └── rooms.dart
-    │   └── staff/
-    │       ├── doctors.dart
-    │       ├── nurse.dart
-    │       └── administrative_personnels.dart
-    ├── data/
-    │   ├── admin/
-    │   │   └── admin_repository.dart
-    │   ├── appointment/
-    │   │   └── appointment_repository.dart
-    │   ├── doctor/
-    │   │   └── doctor_repository.dart
-    │   ├── nurse/
-    │   │   └── nurse_repository.dart
-    │   ├── patient/
-    │   │   └── patient_repository.dart
-    │   ├── room/
-    │   │   └── room_repository.dart
-    │   └── base_path.dart
-    ├── domain/
-    │   ├── appointment/
-    │   │   ├── appointment_time.dart
-    │   │   └── appointment.dart
-    │   ├── hospital/
-    │   │   └── hospital.dart
-    │   ├── patient/
-    │   │   └── patient.dart
-    │   ├── room/
-    │   │   └── room.dart
-    │   └── staff/
-    │       └── staff.dart
-    ├── ui/
-    │   ├── appointment/
-    │   │   └── manage_appointment_console.dart
-    │   ├── patient/
-    │   │   └── manage_patient_console.dart
-    │   ├── room/
-    │   │   └── manage_room_console.dart
-    │   ├── staff/
-    │   │   └── manage_staff_console.dart
-    │   └── hospital_console.dart
-    ├── util/
-    │   └── input_validator.dart
-    └── main.dart
+lib
+├── assets
+│   ├── appointment
+│   │   └── appointments.dart
+│   ├── patient
+│   │   └── patients.dart
+│   ├── room
+│   │   └── rooms.dart
+│   └── staff
+│       ├── doctors.dart
+│       ├── nurse.dart
+│       └── administrative_personnels.dart
+├── data
+│   ├── admin
+│   │   └── admin_repository.dart
+│   ├── appointment
+│   │   └── appointment_repository.dart
+│   ├── doctor
+│   │   └── doctor_repository.dart
+│   ├── nurse
+│   │   └── nurse_repository.dart
+│   ├── patient
+│   │   └── patient_repository.dart
+│   ├── room
+│   │   └── room_repository.dart
+│   └── base_path.dart
+├── domain
+│   ├── appointment
+│   │   ├── appointment_time.dart
+│   │   └── appointment.dart
+│   ├── hospital
+│   │   └── hospital.dart
+│   ├── patient
+│   │   └── patient.dart
+│   ├── room
+│   │   └── room.dart
+│   └── staff
+│       └── staff.dart
+├── ui
+│   ├── appointment
+│   │   └── manage_appointment_console.dart
+│   ├── patient
+│   │   └── manage_patient_console.dart
+│   ├── room
+│   │   └── manage_room_console.dart
+│   ├── staff
+│   │   └── manage_staff_console.dart
+│   └── hospital_console.dart
+├── util
+│   └── input_validator.dart
+└── main.dart
     
 ---
 
