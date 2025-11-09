@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:hospital_management_dart/data/patients/patient_repository.dart';
+import 'package:hospital_management_dart/data/patient/patient_repository.dart';
 
 import '../../domain/patient/patient.dart';
 import '../../util/input_validator.dart';

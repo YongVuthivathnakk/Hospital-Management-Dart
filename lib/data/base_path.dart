@@ -1,1 +1,1 @@
-const BASE_PATH = "lib/assets/";
+const BASE_PATH = "./lib/assets/";

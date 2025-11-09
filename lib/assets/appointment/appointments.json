@@ -1,32 +1,14 @@
 [
   {
-    "id": "d804783f-6032-4c84-aacd-ddcf0572a41d",
-    "staffId": "d12957e8-29a6-4d9d-8a7d-56a844adce01",
-    "patientId": "a6693a06-b0cf-4372-89e2-acbbea8646c1",
+    "id": "71fb1c14-d9a8-43aa-9769-cb4c5a9bfb5a",
+    "staffId": "d1",
+    "patientId": "p1",
     "time": "morning"
   },
   {
-    "id": "edcdb7a9-f4f0-44e6-b678-4acd5ec57419",
-    "staffId": "601574b7-d607-4be1-a765-9dfcf599fb11",
-    "patientId": "ec32750e-e944-43c3-a90d-1af8aa949f8f",
-    "time": "morning"
-  },
-  {
-    "id": "c3544919-6301-40d9-9b53-5d64564920c4",
-    "staffId": "89c375e7-5b18-4154-9264-1a2bd015a039",
-    "patientId": "a6693a06-b0cf-4372-89e2-acbbea8646c1",
-    "time": "afternoon"
-  },
-  {
-    "id": "560555fc-9259-41a1-82ac-00be9d53c21f",
-    "staffId": "b982cc93-719a-417f-bfd8-0e50b7444901",
-    "patientId": "a6693a06-b0cf-4372-89e2-acbbea8646c1",
-    "time": "evening"
-  },
-  {
-    "id": "8c963efa-4404-4806-9379-caac48d13288",
-    "staffId": "89c375e7-5b18-4154-9264-1a2bd015a039",
-    "patientId": "a6693a06-b0cf-4372-89e2-acbbea8646c1",
+    "id": "11f57880-9acd-4af5-99dc-b43c2a4c836e",
+    "staffId": "d2",
+    "patientId": "p2",
     "time": "afternoon"
   }
 ]

@@ -6,7 +6,7 @@ import 'package:hospital_management_dart/domain/appointment/appointment.dart';
 import 'package:hospital_management_dart/domain/appointment/appointment_time.dart';
 
 class AppointmentRepository {
-  void addAppointment(String doctorId, String patientId, AppointmentTime time) {
+  void addAppointment(Appointment appointment) {
     final file = File('$BASE_PATH/appointment/appointments.json');
     file.parent.createSync(recursive: true);
 
@@ -26,14 +26,8 @@ class AppointmentRepository {
     }
 
     // ✅ Create new appointment (status defaults to scheduled)
-    final newAppointment = Appointment(
-      staffId: doctorId,
-      patientId: patientId,
-      time: time,
-    );
-
     // ✅ Convert to JSON
-    appointmentsMap.add(newAppointment.toJson());
+    appointmentsMap.add(appointment.toJson());
 
     // ✅ Save updated list
     file.writeAsStringSync(
