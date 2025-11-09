@@ -81,6 +81,10 @@ lib
 │   ├── staff
 │   │   └── manage_staff_console.dart
 │   └── hospital_console.dart
+├── test
+|    ├── add_doctor.dart
+|    ├── assign_to_room.dart
+|    └── create_appointment.dart 
 ├── util
 │   └── input_validator.dart
 └── main.dart
