@@ -32,6 +32,7 @@ All data (staff, patients, rooms, and appointments) are stored as JSON files in 
 
 ## 🏗️ Project Structure
 
+```text
 lib
 ├── assets
 │   ├── appointment
@@ -83,6 +84,7 @@ lib
 ├── util
 │   └── input_validator.dart
 └── main.dart
+```
     
 ---
 
