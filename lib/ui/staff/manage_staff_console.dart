@@ -1,16 +1,17 @@
 import 'dart:io';
 
-import '../../domain/hospital/hospital.dart';
+import 'package:hospital_management_dart/data/admin/admin_repository.dart';
+import 'package:hospital_management_dart/data/doctor/doctor_repository.dart';
+import 'package:hospital_management_dart/data/nurse/nurse_repository.dart';
+
 import '../../domain/staff/staff.dart';
 import '../../util/input_validator.dart';
-// import 'package:hospital_management_dart/domain/hospital.dart';
-// import 'package:hospital_management_dart/domain/staff.dart';
-// import 'package:hospital_management_dart/util/input_validator.dart';
 
 class ManageStaffConsole {
-  Hospital hospital;
-
-  ManageStaffConsole({required this.hospital});
+  DoctorRepository doctorRepository;
+  NurseRepository nurseRepository;
+  AdminRepository adminRepository;
+  ManageStaffConsole({required this.adminRepository, required this.doctorRepository, required this.nurseRepository});
 
   void start() {
     while (true) {
@@ -47,18 +48,18 @@ class ManageStaffConsole {
   void showAllStaff() {
     print('\n📋 All Staff Members\n=======================\n');
     // --- Doctors ---
-    var doctors = hospital.getDoctors();
+    var doctors = doctorRepository.getDoctors();
 
     if (doctors.isNotEmpty) {
       print('🩺 Doctors\n---------------------------');
-      for (var doctor in hospital.getDoctors()) {
+      for (var doctor in doctorRepository.getDoctors()) {
         print(doctor);
       }
       print('');
     }
 
     //   // --- Nurses ---
-    var nurses = hospital.getNurses();
+    var nurses = nurseRepository.getNurses();
     if (nurses.isNotEmpty) {
       print('🩺 Nurses\n---------------------------');
       for (var nurse in nurses) {
@@ -68,7 +69,7 @@ class ManageStaffConsole {
     }
 
     // --- Administrative Staff ---
-    var administrativePersonnels = hospital.getAdministrativePersonnel();
+    var administrativePersonnels = adminRepository.getAdministrativePersonnel();
     if (administrativePersonnels.isNotEmpty) {
       print('🩺 Administrative Personnel\n---------------------------');
       for (var admin in administrativePersonnels) {
@@ -98,7 +99,7 @@ class ManageStaffConsole {
       name: name,
       gender: gender,
     );
-    hospital.addAdministrativePersonnel(administrativePersonnel);
+    adminRepository.addAdministrativePersonnel(administrativePersonnel);
 
     print('✅ Administrative staff "$name" created successfully!');
 
@@ -120,7 +121,7 @@ class ManageStaffConsole {
     String gender = InputValidator.validateGender();
 
     Nurse nurse = Nurse(name: name, gender: gender);
-    hospital.addNurse(nurse);
+    nurseRepository.addNurse(nurse);
     print('✅ Nurse "$name" created successfully!');
     sleep(const Duration(seconds: 2));
   }
@@ -139,7 +140,7 @@ class ManageStaffConsole {
 
     String gender = InputValidator.validateGender();
     Doctor doctor = Doctor(name: name, gender: gender);
-    hospital.addDoctor(doctor);
+    doctorRepository.addDoctor(doctor);
     print('✅ Doctor "${doctor.name}" created successfully!');
     sleep(const Duration(seconds: 2));
   }

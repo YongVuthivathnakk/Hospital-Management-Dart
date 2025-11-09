@@ -1,16 +1,19 @@
 import 'dart:io';
+import 'package:hospital_management_dart/data/patients/patient_repository.dart';
+import 'package:hospital_management_dart/data/room/room_repository.dart';
+
 import '../../domain/patient/patient.dart';
 import '../../domain/room/room.dart';
-import '../console.dart';
 
 // import 'package:hospital_management_dart/domain/patient.dart';
 // import 'package:hospital_management_dart/domain/room.dart';
 // import 'package:hospital_management_dart/ui/console.dart';
 
-class ManageRoomConsole extends Console {
-  ManageRoomConsole({required super.hospital});
+class ManageRoomConsole {
+  RoomRepository roomRepository;
+  PatientRepository patientRepository;
+  ManageRoomConsole({required this.roomRepository, required this.patientRepository});
 
-  @override
   void start() {
     while (true) {
       print('\n=== ROOM MANAGEMENT ===');
@@ -39,7 +42,7 @@ class ManageRoomConsole extends Console {
   }
 
   void showAllRooms() {
-    List<Room> rooms = hospital.getRooms();
+    List<Room> rooms = roomRepository.getRooms();
 
     if (rooms.isEmpty) {
       print('⚠️ No rooms found.');
@@ -56,7 +59,7 @@ class ManageRoomConsole extends Console {
 
   void assignPatientToRoom() {
     // Get all the avialable rooms
-    List<Room> rooms = hospital.getRooms();
+    List<Room> rooms = roomRepository.getRooms();
     int rIndex = 1;
     if (rooms.isEmpty) {
       print('⚠️ No rooms found.');
@@ -96,7 +99,7 @@ class ManageRoomConsole extends Console {
       }
     }
 
-    List<Patient> patients = hospital.getPatients();
+    List<Patient> patients = patientRepository.getPatients();
     int pIndex = 1;
     if (patients.isEmpty) {
       print('⚠️ No patients found.');
@@ -127,7 +130,7 @@ class ManageRoomConsole extends Console {
     }
 
     // Assign to room
-    hospital.assignToRoom(
+    roomRepository.assignToRoom(
       roomIndex - 1,
       patientIndex - 1,
       patients[patientIndex - 1],
@@ -170,7 +173,7 @@ class ManageRoomConsole extends Console {
 
     // Add to room files
     Room room = Room(roomNumber: number, capacity: capacity);
-    hospital.addRoom(room);
+    roomRepository.addRoom(room);
     print('✅ Room "$number" created successfully!');
     sleep(const Duration(seconds: 2));
   }

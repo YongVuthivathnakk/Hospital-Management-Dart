@@ -1,16 +1,18 @@
 import 'dart:io';
+import 'package:hospital_management_dart/data/patients/patient_repository.dart';
+
 import '../../domain/patient/patient.dart';
-import '../console.dart';
 import '../../util/input_validator.dart';
 
 // import 'package:hospital_management_dart/domain/patient.dart';
 // import 'package:hospital_management_dart/ui/console.dart';
 // import 'package:hospital_management_dart/util/input_validator.dart';
 
-class ManagePatientConsole extends Console {
-  ManagePatientConsole({required super.hospital});
+class ManagePatientConsole {
+  PatientRepository patientRepository;
+  ManagePatientConsole({required this.patientRepository});
 
-  @override
+
   void start() {
     while (true) {
       print('\n=== PATIENT MANAGEMENT ===');
@@ -36,7 +38,7 @@ class ManagePatientConsole extends Console {
   }
 
   void showAllPatient() {
-    List<Patient> patients = hospital.getPatients();
+    List<Patient> patients = patientRepository.getPatients();
 
     if (patients.isEmpty) {
       print('⚠️ No patients found.');
@@ -79,7 +81,7 @@ class ManagePatientConsole extends Console {
     String gender = InputValidator.validateGender();
 
     Patient patient = Patient(name: name, age: age, gender: gender);
-    hospital.addPatient(patient);
+    patientRepository.addPatient(patient);
 
     print('✅ Patient "$name" created successfully!');
     sleep(const Duration(seconds: 2));

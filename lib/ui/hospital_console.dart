@@ -1,20 +1,25 @@
 import 'dart:io';
-import '../domain/hospital/hospital.dart';
+import 'package:hospital_management_dart/data/admin/admin_repository.dart';
+import 'package:hospital_management_dart/data/appointment/appointment_repository.dart';
+import 'package:hospital_management_dart/data/doctor/doctor_repository.dart';
+import 'package:hospital_management_dart/data/nurse/nurse_repository.dart';
+import 'package:hospital_management_dart/data/patients/patient_repository.dart';
+import 'package:hospital_management_dart/data/room/room_repository.dart';
+
 import '../ui/appointment/manage_appointment_console.dart';
 import '../ui/patient/manage_patient_console.dart';
 import '../ui/room/manage_room_console.dart';
 import '../ui/staff/manage_staff_console.dart';
 
-// import 'package:hospital_management_dart/domain/hospital.dart';
-// import 'package:hospital_management_dart/ui/appointment/manage_appointment_console.dart';
-// import 'package:hospital_management_dart/ui/patient/manage_patient_console.dart';
-// import 'package:hospital_management_dart/ui/room/manage_room_console.dart';
-// import 'package:hospital_management_dart/ui/staff/manage_staff_console.dart';
 
 class HospitalConsole {
-  final Hospital hospital;
-
-  HospitalConsole({required this.hospital});
+  final AdminRepository adminRepository;
+  final DoctorRepository doctorRepository;
+  final NurseRepository nurseRepository;
+  final PatientRepository patientRepository;
+  final RoomRepository roomRepository;
+  final AppointmentRepository appointmentRepository;
+  HospitalConsole({required this.adminRepository, required this.doctorRepository, required this.nurseRepository, required this.patientRepository, required this.roomRepository, required this.appointmentRepository});
 
   void startConsole() {
     print('🏥 Welcome to Hospital Management System');
@@ -40,7 +45,7 @@ class HospitalConsole {
           break;
         case '4':
           appointmentConsole();
-          return;
+          break;
         case '5':
           print('👋 Exiting system... Goodbye!');
           return;
@@ -54,7 +59,7 @@ class HospitalConsole {
   // STAFF MANAGEMENT (UI only)
   // -----------------------------
   void staffConsole() {
-    ManageStaffConsole console = ManageStaffConsole(hospital: hospital);
+    ManageStaffConsole console = ManageStaffConsole(adminRepository: adminRepository, doctorRepository: doctorRepository, nurseRepository: nurseRepository);
     console.start();
   }
 
@@ -62,7 +67,7 @@ class HospitalConsole {
   // ROOM MANAGEMENT (UI only)
   // -----------------------------
   void roomConsole() {
-    ManageRoomConsole console = ManageRoomConsole(hospital: hospital);
+    ManageRoomConsole console = ManageRoomConsole(roomRepository: roomRepository, patientRepository: patientRepository );
     console.start();
   }
 
@@ -70,7 +75,7 @@ class HospitalConsole {
   // PATIENT MANAGEMENT (UI only)
   // -----------------------------
   void patientConsole() {
-    ManagePatientConsole console = ManagePatientConsole(hospital: hospital);
+    ManagePatientConsole console = ManagePatientConsole(patientRepository: patientRepository);
     console.start();
   }
 
@@ -78,9 +83,7 @@ class HospitalConsole {
   // APPOINTMENT MANAGEMENT (UI only)
   // -----------------------------
   void appointmentConsole() {
-    ManageAppointmentConsole console = ManageAppointmentConsole(
-      hospital: hospital,
-    );
+    ManageAppointmentConsole console = ManageAppointmentConsole(appointmentRepository: appointmentRepository, patientRepository: patientRepository, doctorRepository: doctorRepository );
     console.start();
   }
 }

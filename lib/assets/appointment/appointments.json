@@ -22,5 +22,11 @@
     "staffId": "b982cc93-719a-417f-bfd8-0e50b7444901",
     "patientId": "a6693a06-b0cf-4372-89e2-acbbea8646c1",
     "time": "evening"
+  },
+  {
+    "id": "8c963efa-4404-4806-9379-caac48d13288",
+    "staffId": "89c375e7-5b18-4154-9264-1a2bd015a039",
+    "patientId": "a6693a06-b0cf-4372-89e2-acbbea8646c1",
+    "time": "afternoon"
   }
 ]

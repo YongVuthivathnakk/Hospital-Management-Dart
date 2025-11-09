@@ -1,0 +1,1 @@
+const BASE_PATH = "lib/assets/";

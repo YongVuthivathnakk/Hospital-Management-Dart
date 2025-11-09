@@ -1,21 +1,20 @@
 import 'dart:io';
-//import 'dart:isolate';
+
+import 'package:hospital_management_dart/data/appointment/appointment_repository.dart';
+import 'package:hospital_management_dart/data/doctor/doctor_repository.dart';
+import 'package:hospital_management_dart/data/patients/patient_repository.dart';
 import 'package:hospital_management_dart/domain/appointment/appointment.dart';
 import 'package:hospital_management_dart/domain/appointment/appointment_time.dart';
+import 'package:hospital_management_dart/domain/hospital/hospital.dart';
 import 'package:hospital_management_dart/domain/patient/patient.dart';
 import 'package:hospital_management_dart/domain/staff/staff.dart';
+class ManageAppointmentConsole {
+  AppointmentRepository appointmentRepository;
+  PatientRepository patientRepository;
+  DoctorRepository doctorRepository;
+  ManageAppointmentConsole({required this.appointmentRepository, required this.patientRepository, required this.doctorRepository});
 
-import '../console.dart';
-
-//import 'package:hospital_management_dart/ui/console.dart';
-
-class ManageAppointmentConsole extends Console {
-  ManageAppointmentConsole({required super.hospital});
-
-  @override
   void start() {
-    print('\n📅 Appointment Management Console');
-
     while (true) {
       print('\n=== Appointment Menu ===');
       print('1. Create Appointment');
@@ -40,7 +39,7 @@ class ManageAppointmentConsole extends Console {
   }
 
   void viewAllAppointments() {
-    List<Appointment> appointments = hospital.getAppointments();
+    List<Appointment> appointments = appointmentRepository.getAppointments();
 
     if (appointments.isEmpty) {
       print('⚠️ No patients found.');
@@ -55,7 +54,7 @@ class ManageAppointmentConsole extends Console {
 
   void createAppointment() {
     // === Show all patients ===
-    List<Patient> patients = hospital.getPatients();
+    List<Patient> patients = patientRepository.getPatients();
     if (patients.isEmpty) {
       print('⚠️ No patients found.');
       return;
@@ -85,7 +84,7 @@ class ManageAppointmentConsole extends Console {
     final selectedPatient = patients[patientIndex - 1];
 
     // === Show all doctors ===
-    List<Doctor> doctors = hospital.getDoctors();
+    List<Doctor> doctors = doctorRepository.getDoctors();
     if (doctors.isEmpty) {
       print('⚠️ No doctors found.');
       return;
@@ -137,7 +136,14 @@ class ManageAppointmentConsole extends Console {
     }
     final selectedTime = AppointmentTime.values[timeIndex - 1];
 
-    hospital.addAppointment(
+    bool conflictAppointment= Hospital().isStaffAvailable(selectedDoctor.id, selectedTime);
+    if(conflictAppointment) {
+      print("\n⚠️ Staff is not available at this time");
+      print("Please Try Again!");
+      return;
+    }; 
+
+    appointmentRepository.addAppointment(
       selectedDoctor.id,
       selectedPatient.id,
       selectedTime,
